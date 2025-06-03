@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Call Test Trigger</title>
+</head>
+<body>
+  <h1>Test Studio Flow</h1>
+  <button id="callBtn">Start Test Call</button>
+  <div id="status"></div>
+
+  <script>
+    document.getElementById('callBtn').addEventListener('click', async () => {
+      document.getElementById('status').innerText = 'Sending request...';
+
+      try {
+        const response = await fetch('https://kyb69n6rg5.execute-api.us-east-1.amazonaws.com/prod/send', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ test: true })
+        });
+
+        const result = await response.json();
+        document.getElementById('status').innerText = 'Call triggered: ' + JSON.stringify(result);
+      } catch (error) {
+        document.getElementById('status').innerText = 'Error: ' + error.message;
+      }
+    });
+  </script>
+</body>
+</html>
